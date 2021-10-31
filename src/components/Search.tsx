@@ -12,10 +12,11 @@ export const Search:FC<SearchI> = ({users, onInputChange}) => {
 
   const findUser = () => {
     return users.map(user => {
-      const [...data] = user.name.toLowerCase().split(' ')
+      const name = user.name.toLowerCase()
+      const [...data] = name.split(' ')
       let term:boolean[] = []
       data.forEach(el => {
-        term.push(el.startsWith(searchValue.toLowerCase()))
+        term.push(el.startsWith(searchValue.toLowerCase()) || name.startsWith(searchValue.toLowerCase()))
       })
       return term.includes(true) ? user : null
     })
