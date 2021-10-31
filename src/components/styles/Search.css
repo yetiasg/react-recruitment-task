@@ -1,0 +1,10 @@
+.Search-input{
+  box-sizing: border-box;
+  width:90%;
+  height: 2.5rem;
+  padding: 4px;
+  font-size: 1.2rem;
+  margin: 2rem;
+  border-radius: 5px;
+}
+
