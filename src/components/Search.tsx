@@ -10,23 +10,26 @@ interface SearchI{
 export const Search:FC<SearchI> = ({users, onInputChange}) => {
   const [searchValue, setSearchValue] = useState<string>('')
 
-  useEffect(() => {
-    const search = () => {
-      return users.map(user => {
-        const [...data] = user.name.toLowerCase().split(' ')
-        let term:boolean[] = []
-        data.forEach( el => {
-          term.push(el.startsWith(searchValue.toLowerCase()))
-        })
-        return term.includes(true) ? user : null
+  const findUser = () => {
+    return users.map(user => {
+      const [...data] = user.name.toLowerCase().split(' ')
+      let term:boolean[] = []
+      data.forEach(el => {
+        term.push(el.startsWith(searchValue.toLowerCase()))
       })
-    }
+      return term.includes(true) ? user : null
+    })
+  }
+
+  useEffect(() => {
     if(!searchValue) return onInputChange(users)
-    onInputChange(search())
-  }, [searchValue, users, onInputChange])
+    onInputChange(findUser())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue])
 
   return (
     <input
+      type="text"
       className="Search-input"
       value={searchValue}
       placeholder="Search by user name..."
