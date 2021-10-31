@@ -4,7 +4,7 @@ import { UserI } from './App'
 
 interface SearchI{
   users:UserI[];
-  onInputChange: (setMatchedUsers: any) => void;
+  onInputChange: (users: (UserI | null)[]) => void;
 }
 
 export const Search:FC<SearchI> = ({users, onInputChange}) => {
