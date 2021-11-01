@@ -18,8 +18,10 @@ export const App:FC = () => {
   const fetchUsers = async () => {
     try{
       const response = await jsonPlaceholder.get('/users')
-      setUsers(response.data)
-      setMatchedUsers(response.data)
+      if(response.data){
+        setUsers(response.data)
+        setMatchedUsers(response.data)
+      }
     }catch(error){
       setErrorMsg('Something went wrong. Try again later')
     }
@@ -33,8 +35,8 @@ export const App:FC = () => {
     <div className="App-container">
       <h4 className="App-header">Users list</h4>
       <Search users={users} onInputChange={setMatchedUsers}/>
-      <div>{(users.length <= 0 && !errorMsg) ? <h4 className="App-info">Loading...</h4> : null}</div>
-      <div>{errorMsg ? <h4 className="App-info">{errorMsg}</h4> : null}</div>
+      <div>{(users.length <= 0 && !errorMsg) ? <h4 className="App-info-loading">Loading...</h4> : null}</div>
+      <div>{errorMsg ? <h4 className="App-info-error">{errorMsg}</h4> : null}</div>
       <UsersList users={matchedUsers}/>
     </div>
   )

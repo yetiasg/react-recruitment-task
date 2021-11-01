@@ -12,12 +12,15 @@ export const Search:FC<SearchI> = ({users, onInputChange}) => {
 
   const findUser = () => {
     return users?.map(user => {
+
       const name = user.name.toLowerCase()
       const [...data] = name.split(' ')
       let term:boolean[] = []
+
       data.forEach(el => {
         term.push(el.startsWith(searchValue.toLowerCase()) || name.startsWith(searchValue.toLowerCase()))
       })
+      
       return term.includes(true) ? user : null
     })
   }
@@ -30,6 +33,7 @@ export const Search:FC<SearchI> = ({users, onInputChange}) => {
 
   return (
     <input
+      name="search-input"
       type="text"
       className="Search-input"
       value={searchValue}

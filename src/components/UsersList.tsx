@@ -10,21 +10,19 @@ export const UsersList:FC<UsersListI> = ({users}) => {
   const renderList = () => {
     return users?.map(user => {
      if(user) return (
-      <li
-        className="UserList-li"
+      <li 
+        className="UsersList-li"
         key={user?.id}>
-        <span className="UserList-li-name">{user?.name}</span>
-        {` @${user?.username}`}
+        <span className="UsersList-li-name">{user?.name}</span>
+        <span className="UsersList-li-username">{` @${user?.username}`}</span>
       </li>
       )
      return null
     })
   }
-
   return (
-    <div className="UserList-container">
+    <div className="UsersList-container">
       <ol className="UsersList-list">{renderList()}</ol>
     </div>
   )
 }
-

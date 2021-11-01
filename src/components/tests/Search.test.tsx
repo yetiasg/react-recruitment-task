@@ -1,23 +1,40 @@
-import ReactDOM from 'react-dom'
-import { App } from '../App'
-
-let container = null
-beforeEach(() => {
-  container = document.createElement('div')
-  ReactDOM.render(<App/>, container)
-})
-
-// afterEach(() => {
-
-// })
+import { render, unmountComponentAtNode } from 'react-dom'
+import { act } from 'react-dom/test-utils';
+import { Search } from '../Search'
 
 
-function sum(a:number, b:number):number{
-  return a+b
-}
+describe('test Search component', () => {
+  const fakeUsers = [
+    {id: 1, name: "Leanne Graham", username: "Bret"},
+    {id: 7, name: "Kurtis Weissnat", username: "Elwyn.Skiles"}
+  ]
 
-describe('test App component', () => {
-  test('sum', () => {
-    expect(sum(5, 5)).toBe(10);
-  });
-})
+  let container:HTMLDivElement 
+  beforeEach(() => {
+    container = document.createElement('div')
+    document.body.appendChild(container)
+  })
+
+  afterEach(() => {
+    unmountComponentAtNode(container)
+    container.remove()
+  })
+
+  test('search input tests', () => {
+    act(() => {
+      render(<Search users={[]} onInputChange={()=>{}} />, container)
+    })
+
+    const searchInput = container.querySelectorAll('input')
+    expect(searchInput).toHaveLength(1)
+    expect(searchInput[0]?.name).toBe('search-input')
+    expect(searchInput[0]?.placeholder).toBe('Search by user name...')
+    expect(searchInput[0]?.value).toBe('')
+    searchInput[0].value = fakeUsers[0].name
+    expect(searchInput[0]?.value).toBe(fakeUsers[0].name)
+  })
+ 
+  test('findUser function test', () => {
+    
+  })
+});

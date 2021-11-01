@@ -1,4 +1,4 @@
-.UserList-container{
+.UsersList-container{
   width: 100%;
   height: 100%;
 }
@@ -8,12 +8,12 @@
   padding-left: 3rem;
 }
 
-.UserList-li{
+.UsersList-li{
   color: rgb(201, 201, 201);
   font-size: 0.9rem;
 }
 
-.UserList-li-name{
+.UsersList-li-name{
   color:black;
   font-size: 1rem;
   font-weight: 600;
