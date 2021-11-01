@@ -2,54 +2,38 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { act } from 'react-dom/test-utils';
 import { App } from '../App'
 
-describe('test App component', () => {
 
-  let container:HTMLDivElement 
-  beforeEach(() => {
+describe('test App component', () => {
+  let container:HTMLDivElement
+
+  beforeAll(async() => {
     container = document.createElement('div')
     document.body.appendChild(container)
   })
 
-  afterEach(() => {
+  afterAll(() => {
     unmountComponentAtNode(container)
+    document.body.removeChild(container)
     container.remove()
   })
 
-
-  test('render App component', () => {
+  test('rendered App component elements', async() => {
     act(() => {
       render(<App/>, container)
     })
     const appContainer = container.querySelectorAll('.App-container')
     expect(appContainer).toHaveLength(1)
-  });
 
-  test('render "User list" header', () => {
-    act(() => {
-      render(<App/>, container)
-    })
-    const headerElements = container.querySelectorAll('.App-header')
-    expect(headerElements).toHaveLength(1)
-    const headerElement = container.querySelector('.App-header')
-    expect(headerElement?.textContent).toBe('Users list')
-  });
+    const headerElement = container.querySelectorAll('.App-header')
+    expect(headerElement).toHaveLength(1)
 
-  // test('render "App-info" elements', async() => {
-  //   act(() => {
-  //     render(<App/>, container)
-  //   })
-  //   const appInfoElements = container.querySelectorAll('.App-info')
-  //   expect(appInfoElements).toHaveLength(2)
-  // });
+    const headerElementText = container.querySelector('.App-header')
+    expect(headerElementText?.textContent).toBe('Users list')
 
-  test('render "App-info-loading" element', async() => {
-    act(() => {
-      render(<App/>, container)
-    })
-    const appInfoElements = container.querySelectorAll('.App-info-loading')
-    expect(appInfoElements).toHaveLength(1)
-    const appInfoElement = container.querySelector('.App-info-loading')
-    expect(appInfoElement?.textContent).toBe('Loading...')
-  });
-   
+    const appInfoElement = container.querySelectorAll('.App-info-loading')
+    expect(appInfoElement).toHaveLength(1)
+
+    const appInfoElementText = container.querySelector('.App-info-loading')
+    expect(appInfoElementText?.textContent).toBe('Loading...')
+  })
 })

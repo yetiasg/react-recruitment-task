@@ -1,3 +1,7 @@
+.Search-container{
+  width: 100%;
+}
+
 .Search-input{
   box-sizing: border-box;
   width:90%;

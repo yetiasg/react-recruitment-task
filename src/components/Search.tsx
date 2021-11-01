@@ -32,13 +32,15 @@ export const Search:FC<SearchI> = ({users, onInputChange}) => {
   }, [searchValue])
 
   return (
-    <input
-      name="search-input"
-      type="text"
-      className="Search-input"
-      value={searchValue}
-      placeholder="Search by user name..."
-      onChange={e => setSearchValue(e.target.value)}
-    />
+    <div className="Search-container">
+      <input
+        name="search-input"
+        type="text"
+        className="Search-input"
+        value={searchValue}
+        placeholder="Search by user name..."
+        onChange={e => setSearchValue(e.target.value)}
+      />
+    </div>
   )
 }
