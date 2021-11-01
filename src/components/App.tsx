@@ -1,5 +1,5 @@
 import './styles/App.css'
-import { FC, Dispatch, SetStateAction, useState, useEffect } from "react"
+import { FC, useState, useEffect } from "react"
 import { jsonPlaceholder } from "../api/jsonPlaceholder"
 import { UsersList } from './UsersList'
 import { Search } from "./Search"
@@ -15,8 +15,22 @@ export const App:FC = () => {
   const [matchedUsers, setMatchedUsers] = useState<(UserI | null)[]>([])
   const [errorMsg, setErrorMsg] = useState<string>('')
 
+  const fetchUsers = async () => {
+    try{
+      const response = await jsonPlaceholder.get('/users')
+      if(response.data){
+        setUsers(response.data)
+        setMatchedUsers(response.data)
+      }
+    }catch(error){
+      setErrorMsg('Something went wrong. Try again later')
+      setUsers([])
+      setMatchedUsers([])
+    }
+  }
+
   useEffect(() => {
-    fetchUsers(setUsers, setMatchedUsers, setErrorMsg)
+    fetchUsers()
   },[])
 
   return (
@@ -28,22 +42,4 @@ export const App:FC = () => {
       <UsersList users={matchedUsers}/>
     </div>
   )
-}
-
-const fetchUsers = async (
-  setUsers:Dispatch<SetStateAction<UserI[]>>,
-  setMatchedUsers:Dispatch<SetStateAction<(UserI | null)[]>>,
-  setErrorMsg: Dispatch<SetStateAction<string>>
-  ) => {
-  try{
-    const response = await jsonPlaceholder.get('/users')
-    if(response.data){
-      setUsers(response.data)
-      setMatchedUsers(response.data)
-    }
-  }catch(error){
-    setErrorMsg('Something went wrong. Try again later')
-    setUsers([])
-    setMatchedUsers([])
-  }
 }
