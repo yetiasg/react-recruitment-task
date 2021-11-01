@@ -11,7 +11,7 @@ export const Search:FC<SearchI> = ({users, onInputChange}) => {
   const [searchValue, setSearchValue] = useState<string>('')
 
   const findUser = () => {
-    return users.map(user => {
+    return users?.map(user => {
       const name = user.name.toLowerCase()
       const [...data] = name.split(' ')
       let term:boolean[] = []

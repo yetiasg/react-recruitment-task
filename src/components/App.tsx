@@ -12,7 +12,7 @@ export interface UserI{
 
 export const App:FC = () => {
   const [users, setUsers] = useState<UserI[]>([])
-  const [matchedUsers, setMatchedUsers] = useState<UserI[]>([])
+  const [matchedUsers, setMatchedUsers] = useState<(UserI | null)[]>([])
   const [errorMsg, setErrorMsg] = useState<string>('')
 
   const fetchUsers = async () => {

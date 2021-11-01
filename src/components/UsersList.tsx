@@ -3,12 +3,12 @@ import { FC } from 'react'
 import { UserI } from './App'
 
 interface UsersListI{
-  users: UserI[]
+  users: (UserI | null)[]
 }
 
 export const UsersList:FC<UsersListI> = ({users}) => {
   const renderList = () => {
-    return users.map(user => {
+    return users?.map(user => {
      if(user) return (
       <li
         className="UserList-li"
