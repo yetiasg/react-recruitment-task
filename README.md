@@ -28,5 +28,5 @@ App is ready to be deployed!
 
 ## 2) Run app with docker compose 
 
-In project root directory run `docker-compose up --build`
+In project root directory run `docker-compose up --build`\
 Escape with `ctrl+C` and run `docker-compose down` to close app
