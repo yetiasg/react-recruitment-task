@@ -18,10 +18,23 @@ body{
   justify-content: flex-start;
   align-items: center;
   min-width: 25rem;
-  min-height: 25rem;
+  min-height: 30rem;
 }
 
 .App-header{
   font-size: 2rem;
   font-weight: 400;
 }
+
+@media all and (max-width: 430px){
+  :root{
+    font-size: 12px;
+  }
+}
+
+@media all and (min-width: 431px) and (max-width: 630px){
+  :root{
+    font-size: 14px;
+  }
+}
+

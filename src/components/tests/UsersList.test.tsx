@@ -1,95 +1,54 @@
-import { render, unmountComponentAtNode } from 'react-dom'
-import { act } from 'react-dom/test-utils';
 import { UsersList } from '../UsersList'
-
-import { render as jrender, cleanup, waitFor, screen, fireEvent } from  '@testing-library/react'
+import { render as rrender, unmountComponentAtNode} from 'react-dom';
+import { render } from  '@testing-library/react'
+import '@testing-library/jest-dom'
 
 
 describe('test UsersList component', () => {
-  let container:HTMLDivElement
-
-  beforeAll(async() => {
-    container = document.createElement('div')
-    document.body.appendChild(container)
-  })
-
-  afterAll(() => {
-    unmountComponentAtNode(container)
-    document.body.removeChild(container)
-    container.remove()
-  })
-
   const fakeUsers = [
     {id: 1, name: "Leanne Graham", username: "Bret"},
     {id: 7, name: "Kurtis Weissnat", username: "Elwyn.Skiles"}
   ]
 
-  test('renders users list', () => {
-    jrender(<UsersList users={fakeUsers} error=''/>)
-  })
-
   test('renders UsersList container and empty list', () => {
-    act(() => {
-      render(<UsersList users={[]} error=''/>, container)
-    })
+    let container:HTMLDivElement
+    container = document.createElement('div')
+    document.body.appendChild(container)
+
+    rrender(<UsersList users={[]} error=''/>, container)
     const usersListContainer = container.querySelectorAll('div.UsersList-container')
     expect(usersListContainer).toHaveLength(1)
 
     const orderedList = container.querySelectorAll('ol.UsersList-list')
     expect(orderedList).toHaveLength(1)
+
+    unmountComponentAtNode(container)
+    container.remove()
   })
 
   test('renders ordered list with fake data', () => {
-    act(() => {
-      render(<UsersList users={fakeUsers} error=''/>, container)
-    })
-    const orderedList = container.querySelectorAll('ol.UsersList-list')
-    expect(orderedList).toHaveLength(1)
-
-    const orderedListElements = container.querySelectorAll('li.UsersList-li')
-    expect(orderedListElements).toHaveLength(fakeUsers.length)
+    const {getAllByRole} = render(<UsersList users={fakeUsers} error=''/>)
+    expect(getAllByRole('list')).toHaveLength(1)
+    expect(getAllByRole('listitem')).toHaveLength(fakeUsers.length)
   })
 
-  test('renders list that includes passed user data and username', async() => {
-    act(() => {
-      render(<UsersList users={[fakeUsers[0]]} error=''/>, container)
-    })
-    const userListLiName = container.querySelector('span.UsersList-li-name')
-    expect(userListLiName?.textContent).toBe(fakeUsers[0].name)
-
-    const userListLiUsername = container.querySelector('span.UsersList-li-username')
-    expect(userListLiUsername?.textContent?.trim()).toBe(`@${fakeUsers[0].username}`)
+  test('renders list 1 element with fake user data', async() => {
+    const {getByText, getAllByText} = render(<UsersList users={[fakeUsers[0]]} error=''/>)
+    expect(getAllByText(fakeUsers[0].name)).toHaveLength(1)
+    expect(getByText(fakeUsers[0].name)).toBeInTheDocument()
   })
 
-  test('renders empty list and loading message if no data passed, but no error pccurred', async() => {
-    act(() => {
-      render(<UsersList users={[]} error=''/>, container)
-    })
-
-    const orderedList = container.querySelectorAll('ol.UsersList-list')
-    expect(orderedList).toHaveLength(1)
-
-    const appInfoElement = container.querySelectorAll('.UsersList-info-loading')
-    expect(appInfoElement).toHaveLength(1)
-    
-    const appInfoElementText = container.querySelector('.UsersList-info-loading')
-    expect(appInfoElementText?.textContent).toBe('Loading...')
+  test('renders "Loading..." message if no data passed, and no error pccurred', () => {
+    const {getByText, getAllByText} = render(<UsersList users={[]} error=''/>)
+    expect(getAllByText(/Loading.../i)).toHaveLength(1)
+    expect(getByText(/Loading.../i)).toBeInTheDocument()
   })
 
-  test('renders empty list and error message if no data passed, but error occurred', async() => {
+  test('renders error message if no data passed, but error occurred', () => {
     const errorMessage = 'Something went wrong. Try again later'
-    act(() => {
-      render(<UsersList users={[]} error={errorMessage}/>, container)
-    })
-
-    const orderedList = container.querySelectorAll('ol.UsersList-list')
-    expect(orderedList).toHaveLength(1)
-
-    const appInfoElement = container.querySelectorAll('.UsersList-info-error')
-    expect(appInfoElement).toHaveLength(1)
-    
-    const appInfoElementText = container.querySelector('.UsersList-info-error')
-    expect(appInfoElementText?.textContent).toBe(errorMessage)
+    const {getByText, getAllByText} = render(<UsersList users={[]} error={errorMessage}/>)
+    expect(getAllByText(errorMessage)).toHaveLength(1)
+    expect(getByText(errorMessage)).toBeInTheDocument()
   })
 });
 

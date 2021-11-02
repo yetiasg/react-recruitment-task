@@ -18,7 +18,7 @@ export const UsersList:FC<UsersListI> = ({users, error}) => {
         <span className="UsersList-li-username">{` @${user?.username}`}</span>
       </li>
       )
-     return null
+      return null
     })
   }
 

@@ -13,11 +13,10 @@ describe('test App component', () => {
 
   afterAll(() => {
     unmountComponentAtNode(container)
-    document.body.removeChild(container)
     container.remove()
   })
 
-  test('renders App component elements', async() => {
+  test('renderw App component elements', async() => {
     act(() => {
       render(<App/>, container)
     })
