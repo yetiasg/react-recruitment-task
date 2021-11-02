@@ -31,15 +31,14 @@ export const App:FC = () => {
 
   useEffect(() => {
     fetchUsers()
+    setErrorMsg('')
   },[])
 
   return (
     <div className="App-container">
       <h4 className="App-header">Users list</h4>
       <Search users={users} onInputChange={setMatchedUsers}/>
-      <div>{(matchedUsers.length <= 0 && !errorMsg) ? <h4 className="App-info-loading">Loading...</h4> : null}</div>
-      <div>{errorMsg ? <h4 className="App-info-error">{errorMsg}</h4> : null}</div>
-      <UsersList users={matchedUsers}/>
+      <UsersList users={matchedUsers} error={errorMsg}/>
     </div>
   )
 }

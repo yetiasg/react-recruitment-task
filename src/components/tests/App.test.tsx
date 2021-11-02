@@ -29,11 +29,5 @@ describe('test App component', () => {
 
     const headerElementText = container.querySelector('.App-header')
     expect(headerElementText?.textContent).toBe('Users list')
-
-    const appInfoElement = container.querySelectorAll('.App-info-loading')
-    expect(appInfoElement).toHaveLength(1)
-
-    const appInfoElementText = container.querySelector('.App-info-loading')
-    expect(appInfoElementText?.textContent).toBe('Loading...')
   })
 })

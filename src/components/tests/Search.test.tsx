@@ -2,7 +2,6 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { act } from 'react-dom/test-utils';
 import { Search } from '../Search'
 
-
 describe('test Search component', () => {
   let container:HTMLDivElement 
 
