@@ -28,5 +28,7 @@ App is ready to be deployed!
 
 ## 2) Run app with docker compose 
 
+If app do not pass tests, docker avoid to build and run app
+
 In project root directory run `docker-compose up --build`\
 Escape with `ctrl+C` and run `docker-compose down` to close app
