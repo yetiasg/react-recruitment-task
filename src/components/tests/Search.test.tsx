@@ -30,6 +30,7 @@ describe('test Search component', () => {
 
     const searchInput = container.querySelectorAll('input')
     expect(searchInput).toHaveLength(1)
+    
     expect(searchInput[0]?.name).toBe('search-input')
     expect(searchInput[0]?.placeholder).toBe('Search by user name...')
     expect(searchInput[0]?.value).toBe('')

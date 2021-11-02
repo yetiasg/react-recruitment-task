@@ -17,7 +17,7 @@ describe('test App component', () => {
     container.remove()
   })
 
-  test('rendered App component elements', async() => {
+  test('renders App component elements', async() => {
     act(() => {
       render(<App/>, container)
     })

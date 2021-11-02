@@ -5,7 +5,6 @@ import { UsersList } from '../UsersList'
 import { render as jrender, cleanup, waitFor, screen, fireEvent } from  '@testing-library/react'
 
 
-
 describe('test UsersList component', () => {
   let container:HTMLDivElement
 
@@ -29,7 +28,7 @@ describe('test UsersList component', () => {
     jrender(<UsersList users={fakeUsers} error=''/>)
   })
 
-  test('rendered UsersList component elements without data passed', () => {
+  test('renders UsersList container and empty list', () => {
     act(() => {
       render(<UsersList users={[]} error=''/>, container)
     })
@@ -40,7 +39,7 @@ describe('test UsersList component', () => {
     expect(orderedList).toHaveLength(1)
   })
 
-  test('ordered list rendering', () => {
+  test('renders ordered list with fake data', () => {
     act(() => {
       render(<UsersList users={fakeUsers} error=''/>, container)
     })
@@ -51,7 +50,7 @@ describe('test UsersList component', () => {
     expect(orderedListElements).toHaveLength(fakeUsers.length)
   })
 
-  test('rendered list includes user data and username', async() => {
+  test('renders list that includes passed user data and username', async() => {
     act(() => {
       render(<UsersList users={[fakeUsers[0]]} error=''/>, container)
     })
@@ -62,10 +61,14 @@ describe('test UsersList component', () => {
     expect(userListLiUsername?.textContent?.trim()).toBe(`@${fakeUsers[0].username}`)
   })
 
-  test('rendered messages if no data passed but no error', async() => {
+  test('renders empty list and loading message if no data passed, but no error pccurred', async() => {
     act(() => {
       render(<UsersList users={[]} error=''/>, container)
     })
+
+    const orderedList = container.querySelectorAll('ol.UsersList-list')
+    expect(orderedList).toHaveLength(1)
+
     const appInfoElement = container.querySelectorAll('.UsersList-info-loading')
     expect(appInfoElement).toHaveLength(1)
     
@@ -73,11 +76,15 @@ describe('test UsersList component', () => {
     expect(appInfoElementText?.textContent).toBe('Loading...')
   })
 
-  test('rendered messages if no data passed but with error', async() => {
+  test('renders empty list and error message if no data passed, but error occurred', async() => {
     const errorMessage = 'Something went wrong. Try again later'
     act(() => {
       render(<UsersList users={[]} error={errorMessage}/>, container)
     })
+
+    const orderedList = container.querySelectorAll('ol.UsersList-list')
+    expect(orderedList).toHaveLength(1)
+
     const appInfoElement = container.querySelectorAll('.UsersList-info-error')
     expect(appInfoElement).toHaveLength(1)
     
