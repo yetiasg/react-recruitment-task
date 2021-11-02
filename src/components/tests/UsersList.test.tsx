@@ -30,6 +30,10 @@ describe('test UsersList component', () => {
     const {getAllByRole} = render(<UsersList users={fakeUsers} error=''/>)
     expect(getAllByRole('list')).toHaveLength(1)
     expect(getAllByRole('listitem')).toHaveLength(fakeUsers.length)
+    const usersList = getAllByRole('listitem').map(li => li.textContent?.split(' ').slice(0, 2).join(" "))
+    usersList.forEach(user => {
+      expect(fakeUsers.find(u => u.name === user)).toBeTruthy()
+    })
   })
 
   test('renders list 1 element with fake user data', async() => {
